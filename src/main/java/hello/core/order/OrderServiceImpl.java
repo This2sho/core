@@ -1,15 +1,19 @@
 package hello.core.order;
 
 import hello.core.discount.DisCountpolicy;
-import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService{
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-    private final DisCountpolicy disCountpolicy = new RateDiscountPolicy();
+    private final MemberRepository memberRepository;
+    private final DisCountpolicy disCountpolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DisCountpolicy disCountpolicy) {
+        this.memberRepository = memberRepository;
+        this.disCountpolicy = disCountpolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
