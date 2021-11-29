@@ -1,6 +1,7 @@
 package hello.core.order;
 
 import hello.core.discount.DisCountpolicy;
+import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import hello.core.member.MemoryMemberRepository;
@@ -10,13 +11,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderServiceImpl implements OrderService{
 
-    private final MemberRepository memberRepository;
-    private final DisCountpolicy disCountpolicy;
+    @Autowired private  MemberRepository memberRepository;
+    @Autowired private  DisCountpolicy disCountpolicy;
+
+//    @Autowired(required = false) // 선택적 주입
+//    public void setMemberRepository(MemberRepository memberRepository) {
+//        this.memberRepository = memberRepository;
+//    }
+//
+//    @Autowired
+//    public void setDisCountpolicy(DisCountpolicy disCountpolicy) {
+//        this.disCountpolicy = disCountpolicy;
+//    }
+
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, DisCountpolicy disCountpolicy) {
+//        this.memberRepository = memberRepository;
+//        this.disCountpolicy = disCountpolicy;
+//    }
 
     @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, DisCountpolicy disCountpolicy) {
-        this.memberRepository = memberRepository;
-        this.disCountpolicy = disCountpolicy;
+    public void init(MemberRepository memberRepository, DisCountpolicy disCountpolicy) {
+        this.disCountpolicy = new RateDiscountPolicy();
+        this.memberRepository = new MemoryMemberRepository();
     }
 
     @Override
